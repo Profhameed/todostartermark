@@ -24,7 +24,7 @@ class RosterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = RosterAdapter(layoutInflater)
+        val adapter = RosterAdapter(layoutInflater){ motor.save(it.copy(isCompleted = !it.isCompleted))}
         binding.items.apply {
             setAdapter(adapter)
             layoutManager = LinearLayoutManager(context)
