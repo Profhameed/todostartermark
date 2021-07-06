@@ -1,25 +1,50 @@
-package com.commonsware.todo
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.commonsware.todo.RosterAdapter
+import com.commonsware.todo.RosterMotor
+import com.commonsware.todo.databinding.TodoRosterBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RosterListFragment: Fragment() {
+class RosterListFragment : Fragment() {
+    private val motor: RosterMotor by viewModel()
+    private lateinit var binding: TodoRosterBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.todo_roster,container,false)
-    }
+    ): View = TodoRosterBinding.inflate(inflater, container, false).apply {
+        binding =
+            this
+    }.root
 
-    // now there are three ways to show this fragment:
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = RosterAdapter(layoutInflater)
+        binding.items.apply {
+            setAdapter(adapter)
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+        adapter.submitList(motor.items)
+        binding.empty.visibility = View.GONE
+    }
+}
+
+
+// now there are three ways to show this fragment:
 //    • Use a <fragment> element in a layout resource. This is for fragments that we
 //    will be showing all the time.
 //    • Use a FragmentTransaction to tell a FragmentManager to display a fragment
 //    in a specified container.
 //    • Use the Navigation component to abstract away requests to navigate to a
 //    particular screen from the implementation of that screen
-}

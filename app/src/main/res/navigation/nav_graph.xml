@@ -5,6 +5,6 @@
     app:startDestination="@id/rosterListFragment">
     <fragment
         android:id="@+id/rosterListFragment"
-        android:name="com.commonsware.todo.RosterListFragment"
+        android:name="RosterListFragment"
         android:label="RosterListFragment" />
 </navigation>
