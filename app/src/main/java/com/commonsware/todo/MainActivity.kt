@@ -1,19 +1,31 @@
 package com.commonsware.todo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.commonsware.todo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var appBarConfiguration:AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        supportFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let{nav ->
+            appBarConfiguration = AppBarConfiguration(nav.graph)
+        setupActionBarWithNavController(nav,appBarConfiguration)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -29,6 +41,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+//page 220
+    override fun onSupportNavigateUp() =
+        navigateUp(findNavController(R.id.nav_host), appBarConfiguration)
 
 
 }
