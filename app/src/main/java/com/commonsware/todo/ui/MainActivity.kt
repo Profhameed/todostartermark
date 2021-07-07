@@ -1,4 +1,4 @@
-package com.commonsware.todo
+package com.commonsware.todo.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.commonsware.todo.R
 import com.commonsware.todo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        supportFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let{nav ->
+        supportFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let{ nav ->
             appBarConfiguration = AppBarConfiguration(nav.graph)
         setupActionBarWithNavController(nav,appBarConfiguration)
         }
